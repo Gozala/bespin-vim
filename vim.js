@@ -40,7 +40,8 @@ var Range = require('rangeutils:utils/range');
 "define metadata";
 ({
     "dependencies": {
-        "canon": "0.0"
+        "canon": "0.0",
+        "uicommands": "0.0"
     },
     "provides": [
         {
@@ -66,10 +67,20 @@ var Range = require('rangeutils:utils/range');
             "ep": "command",
             "name": "vim moveDown",
             "pointer": "#moveDown"
+        },
+        {
+            "ep": "command",
+            "name": "vim normalMode",
+            "key": "escape",
+            "predicates": {"isCommandLine": true, "isKeyUp": false},
+            "pointer": "#jumpEditor"
         }
     ]
 });
 "end";
+
+// don't like this #temporary #hack & hope to find a bette sulution soon
+exports.jumpEditor = require("uicommands").jumpEditor;
 
 exports.moveLeft = function(env, args) {
     var view = env.view;
