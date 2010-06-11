@@ -1,8 +1,11 @@
 "define metadata";
 ({
+    "name": "bespin-vim-dvorak",
+    "description": "bespin vim keymappings for dvorak keyboard layout",
     "dependencies": {
         "vim": "0.0",
-        "uicommands": "0.0"
+        "uicommands": "0.0",
+        "text_editor": "0.0"
     },
     "provides": [
         {
@@ -17,6 +20,39 @@
                     {
                         "key": "s",
                         "exec": "jump-commandline"
+                    },
+                    {
+                        "key": "o",
+                        "exec": "openline",
+                        "then": "insertMode"
+                    },
+                    {
+                        "regex": ["(g)", "(g)"],
+                        "exec": "move docstart"
+                    },
+                    {
+                        "key": "G",
+                        "exec": "move docend"
+                    },
+                    {
+                        "key": "w",
+                        "exec": "move nextword"
+                    },
+                    {
+                        "key": "b",
+                        "exec": "move prevword"
+                    },
+                    {
+                        "key": "-",
+                        "exec": "move lineend"
+                    },
+                    {
+                        "key": "_",
+                        "exec": "move linestart"
+                    },
+                    {
+                        "key": "/",
+                        "exec": "find"
                     },
                     {
                         "key": "escape",

@@ -39,6 +39,8 @@ var Range = require('rangeutils:utils/range');
 
 "define metadata";
 ({
+    "name": "bespin-vim",
+    "description": "vim commands for bespin",
     "dependencies": {
         "canon": "0.0",
         "uicommands": "0.0"
