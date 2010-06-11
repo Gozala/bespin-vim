@@ -2,6 +2,7 @@
 ({
     "dependencies": {
         "vim": "0.0",
+        "uicommands": "0.0"
     },
     "provides": [
         {
@@ -12,6 +13,14 @@
                     {
                         "key": "i",
                         "then": "insertMode"
+                    },
+                    {
+                        "key": "s",
+                        "exec": "jump-commandline"
+                    },
+                    {
+                        "key": "escape",
+                        "exec": "jump-editor"
                     },
                     {
                         "regex":    [ "([0-9]*)", "(t|up)" ],
