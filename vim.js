@@ -74,16 +74,28 @@ var Range = require('rangeutils:utils/range');
             "ep": "command",
             "name": "vim normalMode",
             "key": "escape",
-            "predicates": {"isCommandLine": true, "isKeyUp": false},
-            "pointer": "#jumpEditor"
+            "pointer": "#normalMode"
+        },
+        {
+            "ep": "command",
+            "name": "vim insertMode",
+            "key": "escape",
+            "pointer": "#insertMode"
         }
     ]
 });
 "end";
 
 // don't like this #temporary #hack & hope to find a bette sulution soon
-exports.jumpEditor = require("uicommands").jumpEditor;
+uicommands = require("uicommands")
 
+exports.normalMode = function(env) {
+    uicommands.jumpEditor(env)
+    env.editor.textView._cursorType = 'block'
+}
+exports.insertMode = function(env) {
+    env.editor.textView._cursorType = 'bar'
+}
 exports.moveLeft = function(env, args) {
     var view = env.view;
     var range = view.getSelectedRange();

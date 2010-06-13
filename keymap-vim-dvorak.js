@@ -15,6 +15,7 @@
                 "start": [
                     {
                         "key": "i",
+                        "exec": "vim insertMode",
                         "then": "insertMode"
                     },
                     {
@@ -114,6 +115,7 @@
                 "insertMode": [
                     {
                         "key": "escape",
+                        "exec": "vim normalMode",
                         "then": "start"
                     },
                     {
