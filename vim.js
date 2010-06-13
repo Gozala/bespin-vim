@@ -20,6 +20,7 @@
  *
  * Contributor(s):
  *   Bespin Team (bespin@mozilla.com)
+ *   Irakli Gozalishvili <rfobic@gmail.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,17 +36,38 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var Range = require('rangeutils:utils/range');
-
 "define metadata";
 ({
     "name": "bespin-vim",
     "description": "vim commands for bespin",
     "dependencies": {
         "canon": "0.0",
-        "uicommands": "0.0"
+        "uicommands": "0.0",
+        "settings": "0.0"
     },
     "provides": [
+        {
+            "ep": "setting",
+            "name": "cursor.type.mode.normal",
+            "description": "The cursor type when in normal mode",
+            "type": {
+                "name": "selection",
+                "data": ["bar", "block", "underline"]
+            },
+            "defaultValue": "block"
+        },
+        {
+            "ep": "setting",
+            "name": "cursor.type.mode.insert",
+            "description": "The cursor type when in insert mode",
+            "type": {
+                "name": "selection",
+                "data": ["bar", "block", "underline"]
+            },
+            "defaultValue": "bar"
+        },
+
+
         {
             "ep": "command",
             "name": "vim"
@@ -83,53 +105,59 @@ var Range = require('rangeutils:utils/range');
             "pointer": "#insertMode"
         }
     ]
-});
+})
 "end";
 
+var CURSOR_FOCUSED = 'cursor.type.focused',
+    CURSOR_NORMAL = 'cursor.type.mode.normal',
+    CURSOR_INSERT = 'cursor.type.mode.insert'
+
 // don't like this #temporary #hack & hope to find a bette sulution soon
-uicommands = require("uicommands")
+var uicommands = require("uicommands")
+var Range = require('rangeutils:utils/range')
+var settings = require('settings').settings
 
 exports.normalMode = function(env) {
+    settings.set(CURSOR_FOCUSED, settings.get(CURSOR_NORMAL))
     uicommands.jumpEditor(env)
-    env.editor.textView._cursorType = 'block'
 }
 exports.insertMode = function(env) {
-    env.editor.textView._cursorType = 'bar'
+    settings.set(CURSOR_FOCUSED, settings.get(CURSOR_INSERT))
 }
 exports.moveLeft = function(env, args) {
-    var view = env.view;
-    var range = view.getSelectedRange();
+    var view = env.view
+    var range = view.getSelectedRange()
 
     view.moveCursorTo({
         col: Math.max(range.start.col - args.n, 0),
         row: range.start.row
-    });
-};
+    })
+}
 
 exports.moveRight = function(env, args) {
-    var view = env.view;
-    var lines = env.model.lines;
-    var range = view.getSelectedRange();
+    var view = env.view
+    var lines = env.model.lines
+    var range = view.getSelectedRange()
     var lineLength = lines[range.start.row].length
 
     view.moveCursorTo({
         col: Math.min(range.start.col + args.n, lineLength),
         row: range.start.row
-    });
-};
+    })
+}
 
 exports.moveUp = function(env, args) {
-    var view = env.view;
+    var view = env.view
 
     while (args.n--) {
-        view.moveUp();
+        view.moveUp()
     }
-};
+}
 
 exports.moveDown = function(env, args) {
-    var view = env.view;
+    var view = env.view
 
     while (args.n--) {
-        view.moveDown();
+        view.moveDown()
     }
-};
+}

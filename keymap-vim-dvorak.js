@@ -56,10 +56,6 @@
                         "exec": "find"
                     },
                     {
-                        "key": "escape",
-                        "exec": "jump-editor"
-                    },
-                    {
                         "regex":    [ "([0-9]*)", "(t|up)" ],
                         "exec":     "vim moveUp",
                         "params": [
